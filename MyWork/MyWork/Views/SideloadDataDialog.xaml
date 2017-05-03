@@ -1,0 +1,34 @@
+﻿<UserControl
+    x:Class="MyWork.Views.SideloadDataDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyWork.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Border CornerRadius="10" BorderBrush="LightGray" BorderThickness="1" Padding="5"  Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Sideload Data" FontSize="24" Foreground="#00A2E8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <StackPanel Grid.Row="1" Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0 2 0 0" Padding="20">
+                <TextBlock TextWrapping="Wrap" Padding="10" FontSize="16" Text="If you have an app data file. Side load it into your app and you can use your old data instead create new one."/>
+                <StackPanel Orientation="Horizontal" Height="40" Padding="40 0">
+                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" Background="#80C8C7E7">
+                        <TextBox Width="170" FontSize="16" IsEnabled="False" PlaceholderText="Select file to sideload" Background="Transparent" Text="{Binding SideloadedFile.Name}"/>
+                    </Border>
+                    <Button Content="Select file" Margin="10 0 5 0" Command="{Binding SelectFileToSideloadCommand}"/>
+                    <Button Content="Sideload file" Margin="5 0"  Command="{Binding SideloadFileCommand}"/>
+                </StackPanel>
+                <TextBlock Text="{Binding SideloadErrorMessage}" TextWrapping="Wrap" Padding="10" FontSize="16" Foreground="Red"/>
+            </StackPanel>
+            <Border Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="40" Width="40" Margin="40 -20 -20 0">
+                <Image Source="../Assets/Icon/close_2.png" Height="40" Width="40" Tapped="CloseRateUsView"/>
+            </Border>
+        </Grid>
+    </Border>
+    
+</UserControl>

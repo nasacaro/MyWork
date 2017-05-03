@@ -1,0 +1,8 @@
+App.xbf
+Theme\styles.xbf
+Views\AddNewAccountView.xbf
+Views\LogInView.xbf
+Views\MainPage.xbf
+Views\MyWorkPage.xbf
+Views\SideloadDataDialog.xbf
+Views\UserInfoGridView.xbf

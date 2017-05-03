@@ -1,0 +1,180 @@
+﻿<Page
+    x:Class="MyWork.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyWork"
+    xmlns:views="using:MyWork.Views"
+    xmlns:converters="using:MyWork.BusinessLogicLayer.Utilities"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Theme/styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:IndexToColorConverter x:Key="IndexToColorConverter" />
+            <converters:HeaderTextToColorConverter x:Key="HeaderTextToColorConverter" />
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="#E45CD7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Margin="20 0" Source="../Assets/Icon/menubar.png" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Width="250" Height="50"  Command="{Binding GotoMyWorkPageCommand}">
+                                <MenuFlyoutItem.Template>
+                                    <ControlTemplate>
+                                        <Border Background="#646464" BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                            <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Goto MyWork Page" Foreground="White" FontSize="20"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </MenuFlyoutItem.Template>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutSeparator Background="White" BorderBrush="Transparent" BorderThickness="0" Padding="0 0"></MenuFlyoutSeparator>
+                            <MenuFlyoutItem Width="250" Height="50"  Command="{Binding ImportDataCommand}">
+                                <MenuFlyoutItem.Template>
+                                    <ControlTemplate>
+                                        <Border Background="#646464" BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                            <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Sideload Data" Foreground="White" FontSize="20"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </MenuFlyoutItem.Template>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutSeparator Background="White" BorderBrush="Transparent" BorderThickness="0" Padding="0 0"></MenuFlyoutSeparator>
+                            <MenuFlyoutItem Width="250" Height="50">
+                                <MenuFlyoutItem.Template>
+                                    <ControlTemplate>
+                                        <Border Background="#646464" BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                            <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Tutorial" Foreground="White" FontSize="20"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </MenuFlyoutItem.Template>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+                <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding DeleteSelectedItemCommand}" Visibility="{Binding CompleteButtonVisibility}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border CornerRadius="5" Background="Red" BorderBrush="Red">
+                                <TextBlock Text="Delete" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="Black" Padding="10 5"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <TextBlock Grid.Column="2" Text="MyWork Home" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                <Border Grid.Column="3" CornerRadius="10" BorderBrush="LightGray" BorderThickness="1" Margin="0 0 20 0" VerticalAlignment="Center" Background="White" Visibility="{Binding SearchFieldVisibility}">
+                    <TextBox PlaceholderText="Search" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="200" Background="White" BorderBrush="Transparent" Style="{StaticResource SearchTextBoxStyle}" TextChanged="TextBox_TextChanged" Text="{Binding SearchText, Mode=TwoWay}"/>
+                </Border>
+                <Button Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding SearchCommand}" Visibility="{Binding AddNewButtonVisibility}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Margin="0 0 20 0" Source="../Assets/Icon/search_icon.png" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding EditCommand}" Visibility="{Binding EditButtonVisibility}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Margin="0 0 20 0" Source="../Assets/Icon/edit.png" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddNewAccountCommand}" Visibility="{Binding AddNewButtonVisibility}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Margin="0 0 20 0" Source="../Assets/Icon/plus.png" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding CompleteCommand}" Visibility="{Binding CompleteButtonVisibility}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Margin="0 0 20 0" Source="../Assets/Icon/complete.png" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Width="Auto" VerticalAlignment="Center">
+                <Button x:Name="BtnRecent" Command="{Binding ChangeSortTypeCommand}" CommandParameter="recent" Width="100">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Height="40" BorderBrush="#00A2E8" BorderThickness="1" CornerRadius="5 0 0 5" Background="{Binding SelectedIndex,  Converter={StaticResource IndexToColorConverter},ConverterParameter=0}" Tag="0">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Recent View" FontSize="15" Foreground="{Binding SelectedIndex,  Converter={StaticResource HeaderTextToColorConverter},ConverterParameter=0}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="BtnName" Command="{Binding ChangeSortTypeCommand}" CommandParameter="username" Width="100">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Height="40" BorderBrush="#00A2E8" BorderThickness="1" CornerRadius="0" Background="{Binding SelectedIndex, Converter={StaticResource IndexToColorConverter},ConverterParameter=1}" Tag="1">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="UserName" FontSize="15" Foreground="{Binding SelectedIndex,  Converter={StaticResource HeaderTextToColorConverter},ConverterParameter=1}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="BtnEmail" Command="{Binding ChangeSortTypeCommand}" CommandParameter="email" Width="100">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Height="40" BorderBrush="#00A2E8" BorderThickness="1" CornerRadius="0 5 5 0" Background="{Binding SelectedIndex, Converter={StaticResource IndexToColorConverter},ConverterParameter=2}" Tag="2">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Email" FontSize="15" Foreground="{Binding SelectedIndex,  Converter={StaticResource HeaderTextToColorConverter},ConverterParameter=2}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+            <Grid Grid.Row="2" HorizontalAlignment="Stretch" Margin="0 20">
+                <views:UserInfoGridView/>
+            </Grid>
+        </Grid>
+        <Grid  Visibility="{Binding SideloadDataDialogVisibility}" Background="#26000000">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <views:SideloadDataDialog Grid.Column="1" Grid.Row="1"/>
+        </Grid>
+        <Grid Background="#1d000000" Visibility="{Binding ProgressRingVisibility}" Canvas.ZIndex="9999">
+            <ProgressRing Height="100" Width="100" IsActive="True"/>
+        </Grid>
+        <Grid Visibility="{Binding LoginViewVisibility}">
+            <views:LogInView DataContext="{Binding LoginViewModel}"/>
+        </Grid>
+        <Grid Visibility="{Binding AddNewAccountViewVisibility}">
+            <views:AddNewAccountView DataContext="{Binding AddNewAccountViewModel}"/>
+        </Grid>
+    </Grid>
+    
+</Page>

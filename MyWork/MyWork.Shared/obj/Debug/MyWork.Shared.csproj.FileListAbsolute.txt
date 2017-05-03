@@ -1,0 +1,10 @@
+C:\Users\TungLV\documents\visual studio 2015\Projects\MyWork\MyWork.Shared\bin\Debug\MyWork.Shared.dll
+C:\Users\TungLV\documents\visual studio 2015\Projects\MyWork\MyWork.Shared\bin\Debug\MyWork.Shared.pdb
+C:\Users\TungLV\documents\visual studio 2015\Projects\MyWork\MyWork.Shared\obj\Debug\MyWork.Shared.csprojResolveAssemblyReference.cache
+C:\Users\TungLV\documents\visual studio 2015\Projects\MyWork\MyWork.Shared\obj\Debug\MyWork.Shared.dll
+C:\Users\TungLV\documents\visual studio 2015\Projects\MyWork\MyWork.Shared\obj\Debug\MyWork.Shared.pdb
+D:\Project\MyWork\MyWork.Shared\bin\Debug\MyWork.Shared.dll
+D:\Project\MyWork\MyWork.Shared\bin\Debug\MyWork.Shared.pdb
+D:\Project\MyWork\MyWork.Shared\obj\Debug\MyWork.Shared.csprojResolveAssemblyReference.cache
+D:\Project\MyWork\MyWork.Shared\obj\Debug\MyWork.Shared.dll
+D:\Project\MyWork\MyWork.Shared\obj\Debug\MyWork.Shared.pdb
