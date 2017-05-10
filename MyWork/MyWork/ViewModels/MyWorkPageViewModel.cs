@@ -1,6 +1,7 @@
 ﻿using MyWork.BusinessLogicLayer.Manager;
 using MyWork.Common;
 using MyWork.Models.DBModels;
+using MyWork.Models.DisplayModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,29 +71,29 @@ namespace MyWork.ViewModels
             set { SetProperty(ref activeSpints, value); }
         }
 
-        private List<Backlog> futureBacklogs = new List<Backlog>();
-        public List<Backlog> FutureBacklogs
+        private List<BacklogModel> futureBacklogs = new List<BacklogModel>();
+        public List<BacklogModel> FutureBacklogs
         {
             get { return futureBacklogs; }
             set { SetProperty(ref futureBacklogs, value); }
         }
 
-        private List<Backlog> inprogressBacklogs = new List<Backlog>();
-        public List<Backlog> InprogressBacklogs
+        private List<BacklogModel> inprogressBacklogs = new List<BacklogModel>();
+        public List<BacklogModel> InprogressBacklogs
         {
             get { return inprogressBacklogs; }
             set { SetProperty(ref inprogressBacklogs, value); }
         }
 
-        private List<Backlog> doneBacklogs = new List<Backlog>();
-        public List<Backlog> DoneBacklogs
+        private List<BacklogModel> doneBacklogs = new List<BacklogModel>();
+        public List<BacklogModel> DoneBacklogs
         {
             get { return doneBacklogs; }
             set { SetProperty(ref doneBacklogs, value); }
         }
 
-        private List<Backlog> acceptBacklogs = new List<Backlog>();
-        public List<Backlog> AcceptBacklogs
+        private List<BacklogModel> acceptBacklogs = new List<BacklogModel>();
+        public List<BacklogModel> AcceptBacklogs
         {
             get { return acceptBacklogs; }
             set { SetProperty(ref acceptBacklogs, value); }
@@ -143,22 +144,80 @@ namespace MyWork.ViewModels
 
         private void LoadInprogressBacklog(int userId, int sprint)
         {
-            InprogressBacklogs = BacklogManager.GetInstance().GetAllInProgressBacklog(userId, sprint);
+            var inprogressBacklogs = BacklogManager.GetInstance().GetAllInProgressBacklog(userId, sprint);
+            var backlogModels = new List<BacklogModel>();
+            foreach (var backlog in inprogressBacklogs)
+            {
+                var model = new BacklogModel()
+                {
+                    Backlog = backlog
+                };
+                model.EditBacklog += EditBacklog;
+                backlogModels.Add(model);
+            }
+
+            InprogressBacklogs = backlogModels;
         }
 
         private void LoadFutureBacklog(int userId, int sprint)
         {
-            FutureBacklogs = BacklogManager.GetInstance().GetAllFutureBacklog(userId, sprint);
+            var futureBacklogs = BacklogManager.GetInstance().GetAllFutureBacklog(userId, sprint);
+            var backlogModels = new List<BacklogModel>();
+            foreach(var backlog in futureBacklogs)
+            {
+                var model = new BacklogModel()
+                {
+                    Backlog = backlog
+                };
+                model.EditBacklog += EditBacklog;
+                backlogModels.Add(model);
+            }
+
+            FutureBacklogs = backlogModels;
         }
 
         private void LoadDoneBacklog(int userId, int sprint)
         {
-            DoneBacklogs = BacklogManager.GetInstance().GetAllDoneBacklog(userId, sprint);
+            var doneBacklogs = BacklogManager.GetInstance().GetAllDoneBacklog(userId, sprint);
+            var backlogModels = new List<BacklogModel>();
+            foreach (var backlog in doneBacklogs)
+            {
+                var model = new BacklogModel()
+                {
+                    Backlog = backlog
+                };
+                model.EditBacklog += EditBacklog;
+                backlogModels.Add(model);
+            }
+
+            DoneBacklogs = backlogModels;
         }
 
         private void LoadAcceptBacklog(int userId, int sprint)
         {
-            AcceptBacklogs = BacklogManager.GetInstance().GetAllAcceptBacklog(userId, sprint);
+            var acceptBacklogs = BacklogManager.GetInstance().GetAllAcceptBacklog(userId, sprint);
+            var backlogModels = new List<BacklogModel>();
+            foreach (var backlog in acceptBacklogs)
+            {
+                var model = new BacklogModel()
+                {
+                    Backlog = backlog
+                };
+                model.EditBacklog += EditBacklog;
+                backlogModels.Add(model);
+            }
+
+            AcceptBacklogs = backlogModels;
+        }
+
+        private void EditBacklog(object sender, EventArgs e)
+        {
+            BacklogModel editBacklog = (BacklogModel)sender;
+            if(editBacklog != null)
+            {
+                BacklogItemViewModel.CurrentBacklog = editBacklog.Backlog;
+                ShowAddNewBacklogDialog();
+            }
         }
 
         private void ShowAddNewBacklogDialog()

@@ -28,6 +28,7 @@ namespace MyWork.ViewModels
             GenerateStatusList();
             CancelCommand = new RelayCommand(CancelAction);
             SaveCommand = new RelayCommand(SaveBacklogItem);
+            ActiveSpints = SprintManager.GetInstance().GetAllActiveSprint().OrderBy(x => x.SprintNum).ToList();
         }
 
         public RelayCommand CancelCommand { get; private set; }
@@ -46,6 +47,23 @@ namespace MyWork.ViewModels
         {
             get { return statusList; }
             set { SetProperty(ref statusList, value); }
+        }
+
+        private List<Sprint> activeSpints = new List<Sprint>();
+        public List<Sprint> ActiveSpints
+        {
+            get { return activeSpints; }
+            set { SetProperty(ref activeSpints, value); }
+        }
+
+        private int sprintIndex = 0;
+        public int SprintIndex
+        {
+            get { return sprintIndex; }
+            set
+            {
+                SetProperty(ref sprintIndex, value);
+            }
         }
 
         private Backlog currentBacklog = new Backlog();
@@ -86,6 +104,9 @@ namespace MyWork.ViewModels
 
         private void CancelAction()
         {
+            AddNewBacklogErrorMessage = "";
+            CurrentBacklog = new Backlog();
+            SprintIndex = 0;
             Context.CloseAddNewBacklogDialog();
         }
 
@@ -105,7 +126,7 @@ namespace MyWork.ViewModels
                 Context.ProgressRingVisibility = Visibility.Collapsed;
                 return;
             }
-            if (Context.ActiveSpints == null || Context.ActiveSpints.Count == 0)
+            if (ActiveSpints == null || ActiveSpints.Count == 0)
             {
                 AddNewBacklogErrorMessage = "There are no active sprint to add.";
                 Context.ProgressRingVisibility = Visibility.Collapsed;
@@ -118,13 +139,23 @@ namespace MyWork.ViewModels
                 Context.ProgressRingVisibility = Visibility.Collapsed;
                 return;
             }
+            var user = UserAccountManager.GetInstance().GetUserAccountById(appConfig.UserAccountId);
+            if (user == null)
+            {
+                AddNewBacklogErrorMessage = "There is an error when create new backlog. Please try it again later.";
+                Context.ProgressRingVisibility = Visibility.Collapsed;
+                return;
+            }
             CurrentBacklog.UserId = appConfig.UserAccountId;
-            CurrentBacklog.Sprint = Context.ActiveSpints[Context.CurrentSprintIndex].SprintNum;
+            CurrentBacklog.UserName = user.UserName;
+            CurrentBacklog.Sprint = ActiveSpints[SprintIndex].SprintNum;
             BacklogManager.GetInstance().SaveBacklog(CurrentBacklog);
             Context.ProgressRingVisibility = Visibility.Collapsed;
-            AddNewBacklogErrorMessage = "";
-            CurrentBacklog = new Backlog();
-            Context.CloseAddNewBacklogDialog();
+            //AddNewBacklogErrorMessage = "";
+            //CurrentBacklog = new Backlog();
+            //SprintIndex = 0;
+            //Context.CloseAddNewBacklogDialog();
+            CancelAction();
             Context.RefreshPage();
         }
     }

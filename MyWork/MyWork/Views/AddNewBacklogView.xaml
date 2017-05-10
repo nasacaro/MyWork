@@ -60,6 +60,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -71,6 +72,7 @@
                             <TextBlock Grid.Column="0" Grid.Row="3" Text="Priority" Foreground="Black" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,10"/>
                             <TextBlock Grid.Column="0" Grid.Row="4" Text="Estimate" Foreground="Black" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,10"/>
                             <TextBlock Grid.Column="0" Grid.Row="5" Text="Status" Foreground="Black" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,10"/>
+                            <TextBlock Grid.Column="0" Grid.Row="6" Text="Sprint" Foreground="Black" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,10"/>
                             <Border Grid.Column="1" Grid.Row="0" CornerRadius="10" BorderBrush="LightGray" BorderThickness="1" Margin="0,10">
                                 <Grid>
                                     <ListBox HorizontalAlignment="Stretch" BorderBrush="Transparent" BorderThickness="0"/>
@@ -116,6 +118,13 @@
                                 <ComboBoxItem Content="In Progress"/>
                                 <ComboBoxItem Content="Done"/>
                                 <ComboBoxItem Content="Accept"/>
+                            </ComboBox>
+                            <ComboBox Grid.Column="1" Grid.Row="6" Header="" ItemsSource="{Binding ActiveSpints}" HorizontalAlignment="Stretch" SelectedIndex="{Binding SprintIndex, Mode=TwoWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding SprintNum}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
                             </ComboBox>
                         </Grid>
                         <TextBlock Text="{Binding AddNewBacklogErrorMessage}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Red" Margin="20,20,0,5"/>

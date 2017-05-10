@@ -117,6 +117,7 @@
     <Compile Include="Models\DBModels\AppConfiguration.cs" />
     <Compile Include="Models\DBModels\Backlog.cs" />
     <Compile Include="Models\DBModels\Sprint.cs" />
+    <Compile Include="Models\DisplayModels\BacklogModel.cs" />
     <Compile Include="Models\DisplayModels\UserAccountModel.cs" />
     <Compile Include="ViewModels\AddNewAccountViewModel.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />

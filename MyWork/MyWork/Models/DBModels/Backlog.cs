@@ -20,6 +20,8 @@ namespace MyWork.Models.DBModels
 
         public int UserId { get; set; }
 
+        public string UserName { get; set; }
+
         public int Sprint { get; set; }
     }
 }
