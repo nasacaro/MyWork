@@ -32,6 +32,8 @@ namespace MyWork.DAL
             {
                 database.CreateTable<UserAccount>();
                 database.CreateTable<AppConfiguration>();
+                database.CreateTable<Sprint>();
+                database.CreateTable<Backlog>();
             }
             //database.CreateTablesAsync<UserAccount, UserInfo>().Wait();
         }
@@ -72,6 +74,15 @@ namespace MyWork.DAL
             {
                 SQLiteCommand cmd = db.CreateCommand(query);
                 return cmd.ExecuteQuery<T>().FirstOrDefault();
+            }
+        }
+
+        public List<T> GetItems<T>(string query) where T : Entity, new()
+        {
+            using (var db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), DbPath))
+            {
+                SQLiteCommand cmd = db.CreateCommand(query);
+                return cmd.ExecuteQuery<T>();
             }
         }
 

@@ -59,12 +59,14 @@ namespace MyWork.ViewModels
             if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
             {
                 LoginErrorMessage = "Please input username and password to log in";
+                Context.ProgressRingVisibility = Visibility.Collapsed;
                 return; 
             }
             var user = UserAccountManager.GetInstance().DoLogIn(Username.ToLower(), Password);
             if (user == null)
             {
                 LoginErrorMessage = "Incorrect User Name or Password. Please try again.";
+                Context.ProgressRingVisibility = Visibility.Collapsed;
                 return;
             }
             var appConfig = AppConfigurationManager.GetInstance().GetAppConfiguration();

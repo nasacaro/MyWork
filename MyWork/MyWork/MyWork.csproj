@@ -96,6 +96,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BusinessLogicLayer\Manager\AppConfigurationManager.cs" />
+    <Compile Include="BusinessLogicLayer\Manager\BacklogManager.cs" />
+    <Compile Include="BusinessLogicLayer\Manager\SprintManager.cs" />
     <Compile Include="BusinessLogicLayer\Manager\UserAccountManager.cs" />
     <Compile Include="BusinessLogicLayer\Utilities\Utils.cs" />
     <Compile Include="BusinessLogicLayer\Utilities\ValueConverter.cs" />
@@ -106,21 +108,28 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="DAL\DBHelper\AppConfigHelper.cs" />
+    <Compile Include="DAL\DBHelper\BacklogHelper.cs" />
+    <Compile Include="DAL\DBHelper\SprintHelper.cs" />
     <Compile Include="DAL\DBHelper\UserAccountHelper.cs" />
     <Compile Include="DAL\ISQLite.cs" />
     <Compile Include="DAL\Repository.cs" />
     <Compile Include="DAL\Sqlite.cs" />
     <Compile Include="Models\DBModels\AppConfiguration.cs" />
     <Compile Include="Models\DBModels\Backlog.cs" />
+    <Compile Include="Models\DBModels\Sprint.cs" />
     <Compile Include="Models\DisplayModels\UserAccountModel.cs" />
     <Compile Include="ViewModels\AddNewAccountViewModel.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\BacklogItemViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MyWorkPageViewModel.cs" />
     <Compile Include="Views\AddNewAccountView.xaml.cs">
       <DependentUpon>AddNewAccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewBacklogView.xaml.cs">
+      <DependentUpon>AddNewBacklogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LogInView.xaml.cs">
       <DependentUpon>LogInView.xaml</DependentUpon>
@@ -178,6 +187,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\AddNewAccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewBacklogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

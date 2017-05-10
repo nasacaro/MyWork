@@ -20,8 +20,9 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            </Grid.RowDefinitions>          
             <Grid Grid.Row="0" Background="#E45CD7">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -64,9 +65,26 @@
                         </MenuFlyout>
                     </Button.Flyout>
                 </Button>
-                <TextBlock Grid.Column="2" Text="MyWork Home" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>                
+                <TextBlock Grid.Column="2" Text="MyWork Home" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                <Button Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding AddNewBacklogCommand}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Margin="0 0 20 0" Source="../Assets/Icon/plus.png" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </Grid>
-            <Grid Grid.Row="1">
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <TextBlock Text="Sprint" Foreground="Black" VerticalAlignment="Center" Margin="20 0 30 0"/>
+                <ComboBox Grid.Row="1" Header="" ItemsSource="{Binding ActiveSpints}" HorizontalAlignment="Stretch" SelectedIndex="{Binding CurrentSprintIndex, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SprintNum}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -86,7 +104,7 @@
                     <TextBlock Text="Accept" FontSize="24" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>                
             </Grid>
-            <ScrollViewer Grid.Row="2">
+            <ScrollViewer Grid.Row="3">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -95,51 +113,277 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" BorderBrush="LightGray" BorderThickness="1">
-                        <ListView>
-                            
+                        <ListView ItemsSource="{Binding FutureBacklogs}" Style="{StaticResource BacklogListStyle}" ItemContainerStyle="{StaticResource BacklogListItemStyle}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0 10" Grid.Column="1" Background="LightGray">
+                                        <Grid>
+                                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="50"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="30"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <!--<TextBlock Text="Service reques" HorizontalAlignment="Stretch" Foreground="#D9D9D9" Style="{StaticResource BacklogTitleStyle}"></TextBlock>-->
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding BacklogTitle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Style="{StaticResource BacklogTitleStyle}"></TextBlock>
+                                                    <!--<Image Grid.Column="1" Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>-->
+                                                    <Button Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource BacklogItemDropdowBtnStyle}" Margin="0 -10 -10 0">
+                                                        <Image  Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>
+                                                        <Button.Flyout>
+                                                            <MenuFlyout Placement="Bottom" MenuFlyoutPresenterStyle="{StaticResource BacklogArrowMenuFlyoutStyle}">
+                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding EditBacklogCommand}">
+                                                                    <MenuFlyoutItem.Template>
+                                                                        <ControlTemplate>
+                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Edit" Foreground="Black" FontSize="15"/>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </MenuFlyoutItem.Template>
+                                                                </MenuFlyoutItem>
+                                                                <MenuFlyoutSeparator Background="White" BorderBrush="Transparent" BorderThickness="0" Padding="0 0"></MenuFlyoutSeparator>
+                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding QuickCloseBacklogCommand}">
+                                                                    <MenuFlyoutItem.Template>
+                                                                        <ControlTemplate>
+                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Quick Close" Foreground="Black" FontSize="15"/>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </MenuFlyoutItem.Template>
+                                                                </MenuFlyoutItem>
+                                                            </MenuFlyout>
+                                                        </Button.Flyout>
+                                                    </Button>
+                                                </Grid>
+                                                <Border BorderThickness="0 0 0 1" Grid.Row="1" BorderBrush="{StaticResource ItemLinerColorBrush}"/>
+                                                <Grid Grid.Row="2" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="Tung Le" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                    <TextBlock Grid.Column="1" Text="{Binding EstimateHour}" Padding="10 0" HorizontalAlignment="Right" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                </Grid>
+                                                <ListBox Grid.Row="3" HorizontalAlignment="Stretch" BorderBrush="Transparent" BorderThickness="0"></ListBox>
+
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </Border>
-                    <Border Margin="20" Grid.Column="1" Background="LightGray">
-                        <Grid>
-                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="50"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="30"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <!--<TextBlock Text="Service reques" HorizontalAlignment="Stretch" Foreground="#D9D9D9" Style="{StaticResource BacklogTitleStyle}"></TextBlock>-->
-                                <Grid Grid.Row="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="Service request" HorizontalAlignment="Stretch" Foreground="#D9D9D9" Style="{StaticResource BacklogTitleStyle}"></TextBlock>
-                                    <!--<Image Grid.Column="1" Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>-->
-                                    <Button Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource BacklogItemDropdowBtnStyle}" Margin="0 -10 0 0">
-                                        <Image  Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>
-                                        <Button.Flyout>
-                                            <MenuFlyout Placement="Bottom" MenuFlyoutPresenterStyle="{StaticResource BacklogArrowMenuFlyoutStyle}">
-                                                <MenuFlyoutItem Width="50" Height="30"/>
-                                            </MenuFlyout>
-                                        </Button.Flyout>
-                                    </Button>
-                                </Grid>
-                                <Border BorderThickness="0 0 0 1" Grid.Row="1" BorderBrush="{StaticResource ItemLinerColorBrush}"/>
-                                <Grid Grid.Row="2" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="Tung Le" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
-                                    <TextBlock Grid.Column="1" Text="8" Padding="10 0" HorizontalAlignment="Right" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
-                                </Grid>
-                                <ListBox Grid.Row="3" HorizontalAlignment="Stretch" BorderBrush="Transparent" BorderThickness="0"></ListBox>
+                    <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="1">
+                        <ListView ItemsSource="{Binding InprogressBacklogs}" Style="{StaticResource BacklogListStyle}" ItemContainerStyle="{StaticResource BacklogListItemStyle}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0 10" Grid.Column="1" Background="LightGray">
+                                        <Grid>
+                                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="50"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="30"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <!--<TextBlock Text="Service reques" HorizontalAlignment="Stretch" Foreground="#D9D9D9" Style="{StaticResource BacklogTitleStyle}"></TextBlock>-->
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding BacklogTitle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Style="{StaticResource BacklogTitleStyle}"></TextBlock>
+                                                    <!--<Image Grid.Column="1" Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>-->
+                                                    <Button Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource BacklogItemDropdowBtnStyle}" Margin="0 -10 -10 0">
+                                                        <Image  Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>
+                                                        <Button.Flyout>
+                                                            <MenuFlyout Placement="Bottom" MenuFlyoutPresenterStyle="{StaticResource BacklogArrowMenuFlyoutStyle}">
+                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding EditBacklogCommand}">
+                                                                    <MenuFlyoutItem.Template>
+                                                                        <ControlTemplate>
+                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Edit" Foreground="Black" FontSize="15"/>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </MenuFlyoutItem.Template>
+                                                                </MenuFlyoutItem>
+                                                                <MenuFlyoutSeparator Background="White" BorderBrush="Transparent" BorderThickness="0" Padding="0 0"></MenuFlyoutSeparator>
+                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding QuickCloseBacklogCommand}">
+                                                                    <MenuFlyoutItem.Template>
+                                                                        <ControlTemplate>
+                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Quick Close" Foreground="Black" FontSize="15"/>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </MenuFlyoutItem.Template>
+                                                                </MenuFlyoutItem>
+                                                            </MenuFlyout>
+                                                        </Button.Flyout>
+                                                    </Button>
+                                                </Grid>
+                                                <Border BorderThickness="0 0 0 1" Grid.Row="1" BorderBrush="{StaticResource ItemLinerColorBrush}"/>
+                                                <Grid Grid.Row="2" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="Tung Le" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                    <TextBlock Grid.Column="1" Text="{Binding EstimateHour}" Padding="10 0" HorizontalAlignment="Right" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                </Grid>
+                                                <ListBox Grid.Row="3" HorizontalAlignment="Stretch" BorderBrush="Transparent" BorderThickness="0"></ListBox>
 
-                            </Grid>
-                        </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Border>
+                    <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="1">
+                        <ListView ItemsSource="{Binding DoneBacklogs}" Style="{StaticResource BacklogListStyle}" ItemContainerStyle="{StaticResource BacklogListItemStyle}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0 10" Grid.Column="1" Background="LightGray">
+                                        <Grid>
+                                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="50"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="30"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <!--<TextBlock Text="Service reques" HorizontalAlignment="Stretch" Foreground="#D9D9D9" Style="{StaticResource BacklogTitleStyle}"></TextBlock>-->
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding BacklogTitle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Style="{StaticResource BacklogTitleStyle}"></TextBlock>
+                                                    <!--<Image Grid.Column="1" Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>-->
+                                                    <Button Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource BacklogItemDropdowBtnStyle}" Margin="0 -10 -10 0">
+                                                        <Image  Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>
+                                                        <Button.Flyout>
+                                                            <MenuFlyout Placement="Bottom" MenuFlyoutPresenterStyle="{StaticResource BacklogArrowMenuFlyoutStyle}">
+                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding EditBacklogCommand}">
+                                                                    <MenuFlyoutItem.Template>
+                                                                        <ControlTemplate>
+                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Edit" Foreground="Black" FontSize="15"/>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </MenuFlyoutItem.Template>
+                                                                </MenuFlyoutItem>
+                                                                <MenuFlyoutSeparator Background="White" BorderBrush="Transparent" BorderThickness="0" Padding="0 0"></MenuFlyoutSeparator>
+                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding QuickCloseBacklogCommand}">
+                                                                    <MenuFlyoutItem.Template>
+                                                                        <ControlTemplate>
+                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Quick Close" Foreground="Black" FontSize="15"/>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </MenuFlyoutItem.Template>
+                                                                </MenuFlyoutItem>
+                                                            </MenuFlyout>
+                                                        </Button.Flyout>
+                                                    </Button>
+                                                </Grid>
+                                                <Border BorderThickness="0 0 0 1" Grid.Row="1" BorderBrush="{StaticResource ItemLinerColorBrush}"/>
+                                                <Grid Grid.Row="2" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="Tung Le" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                    <TextBlock Grid.Column="1" Text="{Binding EstimateHour}" Padding="10 0" HorizontalAlignment="Right" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                </Grid>
+                                                <ListBox Grid.Row="3" HorizontalAlignment="Stretch" BorderBrush="Transparent" BorderThickness="0"></ListBox>
 
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Border>
+                    <Border Grid.Column="3" BorderBrush="LightGray" BorderThickness="1">
+                        <ListView ItemsSource="{Binding AcceptBacklogs}" Style="{StaticResource BacklogListStyle}" ItemContainerStyle="{StaticResource BacklogListItemStyle}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0 10" Grid.Column="1" Background="LightGray">
+                                        <Grid>
+                                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="50"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="30"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <!--<TextBlock Text="Service reques" HorizontalAlignment="Stretch" Foreground="#D9D9D9" Style="{StaticResource BacklogTitleStyle}"></TextBlock>-->
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding BacklogTitle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Style="{StaticResource BacklogTitleStyle}"></TextBlock>
+                                                    <!--<Image Grid.Column="1" Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>-->
+                                                    <Button Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource BacklogItemDropdowBtnStyle}" Margin="0 -10 -10 0">
+                                                        <Image  Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>
+                                                        <Button.Flyout>
+                                                            <MenuFlyout Placement="Bottom" MenuFlyoutPresenterStyle="{StaticResource BacklogArrowMenuFlyoutStyle}">
+                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding EditBacklogCommand}">
+                                                                    <MenuFlyoutItem.Template>
+                                                                        <ControlTemplate>
+                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Edit" Foreground="Black" FontSize="15"/>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </MenuFlyoutItem.Template>
+                                                                </MenuFlyoutItem>
+                                                                <MenuFlyoutSeparator Background="White" BorderBrush="Transparent" BorderThickness="0" Padding="0 0"></MenuFlyoutSeparator>
+                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding QuickCloseBacklogCommand}">
+                                                                    <MenuFlyoutItem.Template>
+                                                                        <ControlTemplate>
+                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Quick Close" Foreground="Black" FontSize="15"/>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </MenuFlyoutItem.Template>
+                                                                </MenuFlyoutItem>
+                                                            </MenuFlyout>
+                                                        </Button.Flyout>
+                                                    </Button>
+                                                </Grid>
+                                                <Border BorderThickness="0 0 0 1" Grid.Row="1" BorderBrush="{StaticResource ItemLinerColorBrush}"/>
+                                                <Grid Grid.Row="2" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="Tung Le" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                    <TextBlock Grid.Column="1" Text="{Binding EstimateHour}" Padding="10 0" HorizontalAlignment="Right" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                </Grid>
+                                                <ListBox Grid.Row="3" HorizontalAlignment="Stretch" BorderBrush="Transparent" BorderThickness="0"></ListBox>
+
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Border>
                     <!--<ScrollViewer Grid.Column="0" >
                     <Canvas Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                         <Rectangle Width="50" Height="50" Fill="Blue" RenderTransformOrigin="0.5,0.5"
@@ -184,6 +428,12 @@
                 </Canvas>-->
                 </Grid>
             </ScrollViewer>            
+        </Grid>
+        <Grid Visibility="{Binding BacklogItemVisibility}">
+            <local:AddNewBacklogView DataContext="{Binding BacklogItemViewModel}"/>
+        </Grid>
+        <Grid Background="#1d000000" Visibility="{Binding ProgressRingVisibility}" Canvas.ZIndex="9999">
+            <ProgressRing Height="100" Width="100" IsActive="True"/>
         </Grid>
     </Grid>
 </Page>

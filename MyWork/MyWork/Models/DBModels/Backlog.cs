@@ -8,7 +8,9 @@ namespace MyWork.Models.DBModels
 {
     public class Backlog : Entity
     {
-        public string BacklogName { get; set; }
+        public string BacklogTitle { get; set; }
+
+        public string BacklogProject { get; set; }
 
         public int Status { get; set; }
 
@@ -16,5 +18,8 @@ namespace MyWork.Models.DBModels
 
         public int EstimateHour { get; set; }
 
+        public int UserId { get; set; }
+
+        public int Sprint { get; set; }
     }
 }
