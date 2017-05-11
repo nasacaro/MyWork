@@ -153,6 +153,7 @@ namespace MyWork.ViewModels
                     Backlog = backlog
                 };
                 model.EditBacklog += EditBacklog;
+                model.QuickClose += QuichCloseBacklog;
                 backlogModels.Add(model);
             }
 
@@ -170,6 +171,7 @@ namespace MyWork.ViewModels
                     Backlog = backlog
                 };
                 model.EditBacklog += EditBacklog;
+                model.QuickClose += QuichCloseBacklog;
                 backlogModels.Add(model);
             }
 
@@ -187,6 +189,7 @@ namespace MyWork.ViewModels
                     Backlog = backlog
                 };
                 model.EditBacklog += EditBacklog;
+                model.QuickClose += QuichCloseBacklog;
                 backlogModels.Add(model);
             }
 
@@ -204,6 +207,7 @@ namespace MyWork.ViewModels
                     Backlog = backlog
                 };
                 model.EditBacklog += EditBacklog;
+                model.QuickClose += QuichCloseBacklog;
                 backlogModels.Add(model);
             }
 
@@ -215,8 +219,23 @@ namespace MyWork.ViewModels
             BacklogModel editBacklog = (BacklogModel)sender;
             if(editBacklog != null)
             {
-                BacklogItemViewModel.CurrentBacklog = editBacklog.Backlog;
+                BacklogItemViewModel.CurrentBacklog = BacklogManager.GetInstance().GetBacklogById(editBacklog.Backlog.Id);
                 ShowAddNewBacklogDialog();
+            }
+        }
+
+        private void QuichCloseBacklog(object sender, EventArgs e)
+        {
+            BacklogModel thisBacklog = (BacklogModel)sender;
+            if (thisBacklog != null)
+            {
+                if(thisBacklog.Backlog.Status == 0 || thisBacklog.Backlog.Status == 1)
+                {
+                    thisBacklog.Backlog.Status = 2;
+                    thisBacklog.Backlog.EstimateHour = 0;
+                    BacklogManager.GetInstance().SaveBacklog(thisBacklog.Backlog);
+                    RefreshPage();
+                }
             }
         }
 

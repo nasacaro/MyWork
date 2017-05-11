@@ -76,7 +76,7 @@
                             <Border Grid.Column="1" Grid.Row="0" CornerRadius="10" BorderBrush="LightGray" BorderThickness="1" Margin="0,10">
                                 <Grid>
                                     <ListBox HorizontalAlignment="Stretch" BorderBrush="Transparent" BorderThickness="0"/>
-                                    <TextBox PlaceholderText="ID" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="{Binding Username, Mode=TwoWay}" BorderBrush="Transparent" Height="32"/>
+                                    <TextBox PlaceholderText="ID" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="{Binding CurrentBacklog.Id, Mode=TwoWay}" BorderBrush="Transparent" Height="32"/>
                                 </Grid>
                             </Border>
                             <Border Grid.Column="1" Grid.Row="1" CornerRadius="10" BorderBrush="LightGray" BorderThickness="1" Margin="0,10">

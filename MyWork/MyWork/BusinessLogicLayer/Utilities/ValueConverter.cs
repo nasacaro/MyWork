@@ -52,4 +52,30 @@ namespace MyWork.BusinessLogicLayer.Utilities
             throw new NotImplementedException();
         }
     }
+
+    public class BacklogItemBackgroudColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string culture)
+        {
+            int priority = System.Convert.ToInt16(value);
+            switch (priority)
+            {
+                case 0:
+                    return ColorUtils.GetColorFromHex("#F2575F");
+                case 1:
+                    return ColorUtils.GetColorFromHex("#FFFF80");
+                case 2:
+                    return ColorUtils.GetColorFromHex("#51A8FF");
+                case 3:
+                    return ColorUtils.GetColorFromHex("#CDCDCD");
+                default:
+                    return ColorUtils.GetColorFromHex("#CDCDCD");
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -36,6 +36,11 @@ namespace MyWork.BusinessLogicLayer.Manager
             return BacklogHelper.GetInstance().GetAllBacklogByUser(userId);
         }
 
+        public Backlog GetBacklogById(int Id)
+        {
+            return BacklogHelper.GetInstance().GetBacklogById(Id);
+        }
+
         public void DeleteBacklog(Backlog backlog)
         {
             BacklogHelper.GetInstance().DeleteBacklog(backlog);

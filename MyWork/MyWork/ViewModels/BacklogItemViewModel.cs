@@ -120,7 +120,7 @@ namespace MyWork.ViewModels
                 Context.ProgressRingVisibility = Visibility.Collapsed;
                 return;
             }
-            if (CurrentBacklog.EstimateHour <= 0)
+            if (CurrentBacklog.EstimateHour <= 0 && CurrentBacklog.Id == 0)
             {
                 AddNewBacklogErrorMessage = "Please input Positive number for estimate hours.";
                 Context.ProgressRingVisibility = Visibility.Collapsed;

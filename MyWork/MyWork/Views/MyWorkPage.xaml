@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyWork.Views"
+    xmlns:converters="using:MyWork.BusinessLogicLayer.Utilities"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -12,6 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Theme/styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <converters:BacklogItemBackgroudColorConverter x:Key="BacklogItemBackgroudColorConverter" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -116,66 +118,68 @@
                         <ListView ItemsSource="{Binding FutureBacklogs}" Style="{StaticResource BacklogListStyle}" ItemContainerStyle="{StaticResource BacklogListItemStyle}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="0 10" Grid.Column="1" Background="LightGray">
-                                        <Grid>
-                                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="50"></RowDefinition>
-                                                    <RowDefinition Height="Auto"></RowDefinition>
-                                                    <RowDefinition Height="30"></RowDefinition>
-                                                    <RowDefinition Height="Auto"></RowDefinition>
-                                                </Grid.RowDefinitions>
-                                                <!--<TextBlock Text="Service reques" HorizontalAlignment="Stretch" Foreground="#D9D9D9" Style="{StaticResource BacklogTitleStyle}"></TextBlock>-->
-                                                <Grid Grid.Row="0">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Text="{Binding Backlog.BacklogTitle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Style="{StaticResource BacklogTitleStyle}"></TextBlock>
-                                                    <!--<Image Grid.Column="1" Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>-->
-                                                    <Button Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource BacklogItemDropdowBtnStyle}" Margin="0 -10 -10 0">
-                                                        <Image  Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>
-                                                        <Button.Flyout>
-                                                            <MenuFlyout Placement="Bottom" MenuFlyoutPresenterStyle="{StaticResource BacklogArrowMenuFlyoutStyle}">
-                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding EditBacklogCommand}">
-                                                                    <MenuFlyoutItem.Template>
-                                                                        <ControlTemplate>
-                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
-                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
-                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Edit" Foreground="Black" FontSize="15"/>
-                                                                            </Border>
-                                                                        </ControlTemplate>
-                                                                    </MenuFlyoutItem.Template>
-                                                                </MenuFlyoutItem>
-                                                                <MenuFlyoutSeparator Background="White" BorderBrush="Transparent" BorderThickness="0" Padding="0 0"></MenuFlyoutSeparator>
-                                                                <MenuFlyoutItem Width="100" Height="25" Command="{Binding QuickCloseBacklogCommand}">
-                                                                    <MenuFlyoutItem.Template>
-                                                                        <ControlTemplate>
-                                                                            <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
-                                                                                <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
-                                                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Quick Close" Foreground="Black" FontSize="15"/>
-                                                                            </Border>
-                                                                        </ControlTemplate>
-                                                                    </MenuFlyoutItem.Template>
-                                                                </MenuFlyoutItem>
-                                                            </MenuFlyout>
-                                                        </Button.Flyout>
-                                                    </Button>
-                                                </Grid>
-                                                <Border BorderThickness="0 0 0 1" Grid.Row="1" BorderBrush="{StaticResource ItemLinerColorBrush}"/>
-                                                <Grid Grid.Row="2" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Text="{Binding Backlog.UserName}" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
-                                                    <TextBlock Grid.Column="1" Text="{Binding Backlog.EstimateHour}" Padding="10 0" HorizontalAlignment="Right" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
-                                                </Grid>
-                                                <ListBox Grid.Row="3" HorizontalAlignment="Stretch" BorderBrush="Transparent" BorderThickness="0"></ListBox>
+                                    <Button Style="{StaticResource BacklogItemButtonStyle}">
+                                        <Border Margin="0 10" Grid.Column="1" Background="{Binding Backlog.Priority,  Converter={StaticResource BacklogItemBackgroudColorConverter}}">
+                                            <Grid>
+                                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="50"></RowDefinition>
+                                                        <RowDefinition Height="Auto"></RowDefinition>
+                                                        <RowDefinition Height="30"></RowDefinition>
+                                                        <RowDefinition Height="Auto"></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <!--<TextBlock Text="Service reques" HorizontalAlignment="Stretch" Foreground="#D9D9D9" Style="{StaticResource BacklogTitleStyle}"></TextBlock>-->
+                                                    <Grid Grid.Row="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" Text="{Binding Backlog.BacklogTitle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Style="{StaticResource BacklogTitleStyle}"></TextBlock>
+                                                        <!--<Image Grid.Column="1" Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>-->
+                                                        <Button Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource BacklogItemDropdowBtnStyle}" Margin="0 -10 -10 0">
+                                                            <Image  Width="20" VerticalAlignment="Top" Source="../Assets/Icon/arrow_drop_down.png"/>
+                                                            <Button.Flyout>
+                                                                <MenuFlyout Placement="Bottom" MenuFlyoutPresenterStyle="{StaticResource BacklogArrowMenuFlyoutStyle}">
+                                                                    <MenuFlyoutItem Width="100" Height="25" Command="{Binding EditBacklogCommand}">
+                                                                        <MenuFlyoutItem.Template>
+                                                                            <ControlTemplate>
+                                                                                <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                    <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Edit" Foreground="Black" FontSize="15"/>
+                                                                                </Border>
+                                                                            </ControlTemplate>
+                                                                        </MenuFlyoutItem.Template>
+                                                                    </MenuFlyoutItem>
+                                                                    <MenuFlyoutSeparator Background="White" BorderBrush="Transparent" BorderThickness="0" Padding="0 0"></MenuFlyoutSeparator>
+                                                                    <MenuFlyoutItem Width="100" Height="25" Command="{Binding QuickCloseBacklogCommand}">
+                                                                        <MenuFlyoutItem.Template>
+                                                                            <ControlTemplate>
+                                                                                <Border BorderBrush="#FFFFFF" BorderThickness="0 0 0 0">
+                                                                                    <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sideload Data" Foreground="White" FontSize="20"/>-->
+                                                                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Quick Close" Foreground="Black" FontSize="15"/>
+                                                                                </Border>
+                                                                            </ControlTemplate>
+                                                                        </MenuFlyoutItem.Template>
+                                                                    </MenuFlyoutItem>
+                                                                </MenuFlyout>
+                                                            </Button.Flyout>
+                                                        </Button>
+                                                    </Grid>
+                                                    <Border BorderThickness="0 0 0 1" Grid.Row="1" BorderBrush="{StaticResource ItemLinerColorBrush}"/>
+                                                    <Grid Grid.Row="2" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" Text="{Binding Backlog.UserName}" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                        <TextBlock Grid.Column="1" Text="{Binding Backlog.EstimateHour}" Padding="10 0" HorizontalAlignment="Right" FontWeight="SemiBold" Style="{StaticResource UserItemEmailStyle}"></TextBlock>
+                                                    </Grid>
+                                                    <ListBox Grid.Row="3" HorizontalAlignment="Stretch" BorderBrush="Transparent" BorderThickness="0"></ListBox>
 
+                                                </Grid>
                                             </Grid>
-                                        </Grid>
-                                    </Border>
+                                        </Border>
+                                    </Button>                                    
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -184,7 +188,7 @@
                         <ListView ItemsSource="{Binding InprogressBacklogs}" Style="{StaticResource BacklogListStyle}" ItemContainerStyle="{StaticResource BacklogListItemStyle}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="0 10" Grid.Column="1" Background="LightGray">
+                                    <Border Margin="0 10" Grid.Column="1" Background="{Binding Backlog.Priority,  Converter={StaticResource BacklogItemBackgroudColorConverter}}">
                                         <Grid>
                                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
                                                 <Grid.RowDefinitions>
@@ -252,7 +256,7 @@
                         <ListView ItemsSource="{Binding DoneBacklogs}" Style="{StaticResource BacklogListStyle}" ItemContainerStyle="{StaticResource BacklogListItemStyle}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="0 10" Grid.Column="1" Background="LightGray">
+                                    <Border Margin="0 10" Grid.Column="1" Background="{Binding Backlog.Priority,  Converter={StaticResource BacklogItemBackgroudColorConverter}}">
                                         <Grid>
                                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
                                                 <Grid.RowDefinitions>
@@ -320,7 +324,7 @@
                         <ListView ItemsSource="{Binding AcceptBacklogs}" Style="{StaticResource BacklogListStyle}" ItemContainerStyle="{StaticResource BacklogListItemStyle}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="0 10" Grid.Column="1" Background="LightGray">
+                                    <Border Margin="0 10" Grid.Column="1" Background="{Binding Backlog.Priority,  Converter={StaticResource BacklogItemBackgroudColorConverter}}">
                                         <Grid>
                                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="9 10 7 1">
                                                 <Grid.RowDefinitions>
