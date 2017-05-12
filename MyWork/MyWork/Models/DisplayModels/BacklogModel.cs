@@ -15,6 +15,7 @@ namespace MyWork.Models.DisplayModels
         {
             EditBacklogCommand = new RelayCommand(OnEditBacklog);
             QuickCloseBacklogCommand = new RelayCommand(QuickCloseBacklog);
+            OpenBacklogDetailCommand = new RelayCommand(OpenBacklogDetail);
         }
 
         public Backlog Backlog { get; set; }
@@ -23,9 +24,13 @@ namespace MyWork.Models.DisplayModels
 
         public RelayCommand QuickCloseBacklogCommand { get; private set; }
 
+        public RelayCommand OpenBacklogDetailCommand { get; private set; }
+
         public event EventHandler EditBacklog;
 
         public event EventHandler QuickClose;
+
+        public event EventHandler OpenDetail;
 
         private void OnEditBacklog()
         {
@@ -43,5 +48,12 @@ namespace MyWork.Models.DisplayModels
             }
         }
 
+        private void OpenBacklogDetail()
+        {
+            if (OpenDetail != null)
+            {
+                OpenDetail(this, EventArgs.Empty);
+            }
+        }
     }
 }

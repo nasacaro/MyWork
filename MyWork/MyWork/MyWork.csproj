@@ -121,6 +121,7 @@
     <Compile Include="Models\DisplayModels\UserAccountModel.cs" />
     <Compile Include="ViewModels\AddNewAccountViewModel.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\BacklogDetailItemViewModel.cs" />
     <Compile Include="ViewModels\BacklogItemViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -131,6 +132,9 @@
     </Compile>
     <Compile Include="Views\AddNewBacklogView.xaml.cs">
       <DependentUpon>AddNewBacklogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BacklogDetailItem.xaml.cs">
+      <DependentUpon>BacklogDetailItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LogInView.xaml.cs">
       <DependentUpon>LogInView.xaml</DependentUpon>
@@ -159,9 +163,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Icon\arrow_drop_down.png" />
+    <Content Include="Assets\Icon\close.png" />
     <Content Include="Assets\Icon\close_2.png" />
     <Content Include="Assets\Icon\complete.png" />
     <Content Include="Assets\Icon\edit.png" />
+    <Content Include="Assets\Icon\edit_2.png" />
     <Content Include="Assets\Icon\search.png" />
     <Content Include="Assets\Icon\search_icon.png" />
     <Content Include="Assets\Icon\selectedimg.png" />
@@ -192,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddNewBacklogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BacklogDetailItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

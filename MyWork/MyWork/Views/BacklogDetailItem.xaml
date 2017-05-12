@@ -1,0 +1,141 @@
+﻿<UserControl
+    x:Class="MyWork.Views.BacklogDetailItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyWork.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Theme/styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="LoginDialog">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#8006000E" />
+        <Grid Grid.Row="1" Background="#8006000E" Height="Auto">
+            <Border CornerRadius="15" Background="White" Margin="100 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" CornerRadius="15 15 0 0" Background="#A0000000" VerticalAlignment="Center" Height="50">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <TextBlock Text="Backlog Item" VerticalAlignment="Center" Foreground="White" FontSize="22" Padding="20 0 5 0" />
+                                <TextBlock Text="142" VerticalAlignment="Center" Foreground="White" FontSize="22"/>
+                            </StackPanel>
+                            <Button Grid.Column="1" Background="Transparent" VerticalAlignment="Center" Margin="0 0 0 0" Command="{Binding CloseBacklogDetailCommand}">
+                                <Image Source="../Assets/Icon/close.png" Height="40" Width="40" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Background="#EEF1F4" Grid.Column="0" VerticalAlignment="Stretch">
+                            
+                        </StackPanel>
+                        <Grid Background="#DDE2E9" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Background="#7BA330" Height="80" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Backlog Item" VerticalAlignment="Center" Foreground="White" FontSize="22" Padding="20 0 5 0" />
+                                <Button Grid.Column="1" Background="Transparent">
+                                    <Border Background="White" CornerRadius="5">
+                                        <TextBlock Text="Details" Foreground="Black" HorizontalAlignment="Stretch" Padding="5"/>
+                                    </Border>
+                                </Button>
+                                <Button Grid.Column="2" Background="Transparent">
+                                    <Border Background="Transparent" CornerRadius="5">
+                                        <TextBlock Text="History" Foreground="White" HorizontalAlignment="Stretch" Padding="5"/>
+                                    </Border>
+                                </Button>
+                            </Grid>
+                            <ScrollViewer Grid.Row="1">
+                                <StackPanel Orientation="Vertical">
+                                    <Border Background="White" CornerRadius="15" Margin="20" Padding="0 20">
+                                        <StackPanel Orientation="Vertical" Background="Transparent">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="2*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Padding="20 5" Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0 0 1 0">
+                                                    <TextBlock Text="PROJECT" Style="{StaticResource BacklogDetailInfoTitleStyle}"/>
+                                                    <TextBlock Text="Project_1" Style="{StaticResource BacklogDetailInfoContentStyle}"/>
+                                                    <TextBlock Text="SPRINT" Style="{StaticResource BacklogDetailInfoTitleStyle}"/>
+                                                    <TextBlock Text="Sprint 1" Style="{StaticResource BacklogDetailInfoContentStyle}"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Padding="20 5" Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0 0 1 0">
+                                                    <TextBlock Text="OWNERS" Style="{StaticResource BacklogDetailInfoTitleStyle}"/>
+                                                    <TextBlock Text="Tung Le" Style="{StaticResource BacklogDetailInfoContentStyle}"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="2" Padding="20 5" Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0 0 1 0">
+                                                    <TextBlock Text="STATUS" Style="{StaticResource BacklogDetailInfoTitleStyle}"/>
+                                                    <TextBlock Text="Done" Style="{StaticResource BacklogDetailInfoContentStyle}"/>
+                                                    <TextBlock Text="ESTIMATE HOUR" Style="{StaticResource BacklogDetailInfoTitleStyle}"/>
+                                                    <TextBlock Text="4" Style="{StaticResource BacklogDetailInfoContentStyle}"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="3" Padding="20 5" Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0 0 1 0">
+                                                    <TextBlock Text="PRIORITY" Style="{StaticResource BacklogDetailInfoTitleStyle}"/>
+                                                    <TextBlock Text="High" Style="{StaticResource BacklogDetailInfoContentStyle}"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="4" Padding="20 5" Orientation="Vertical">
+                                                    <TextBlock Text="TASK STATUS SUMMARY" Style="{StaticResource BacklogDetailInfoTitleStyle}"/>
+                                                    <TextBlock Text="Tung Le" Style="{StaticResource BacklogDetailInfoContentStyle}"/>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Border BorderBrush="LightGray" BorderThickness="0 0 0 1" Margin="20"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Padding="20 5" Orientation="Vertical">
+                                                    <TextBlock Text="DESCRIPTION" Style="{StaticResource BacklogDetailInfoTitleStyle}"/>
+                                                    <TextBlock Text="Tung Le" Style="{StaticResource BacklogDetailInfoContentStyle}"/>
+                                                </StackPanel>
+                                                <Button Grid.Column="1" Background="Transparent" VerticalAlignment="Top" Margin="0 0 10 0">
+                                                    <Image Source="../Assets/Icon/edit_2.png" Height="20" Width="20" />
+                                                </Button>
+                                                
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="2" Background="#8006000E" />
+    </Grid>
+</UserControl>

@@ -46,6 +46,22 @@ namespace MyWork.ViewModels
             set { SetProperty(ref backlogItemViewModel, value); }
         }
 
+        private BacklogDetailItemViewModel backlogDetailItemViewModel;
+        public BacklogDetailItemViewModel BacklogDetailItemViewModel
+        {
+            get
+            {
+                if (backlogDetailItemViewModel == null)
+                {
+                    backlogDetailItemViewModel = new BacklogDetailItemViewModel();
+                    backlogDetailItemViewModel.Context = this;
+                }
+
+                return backlogDetailItemViewModel;
+            }
+            set { SetProperty(ref backlogDetailItemViewModel, value); }
+        }
+
         public RelayCommand BackToHomePageCommand { get; private set; }
 
         public RelayCommand AddNewBacklogCommand { get; private set; }
@@ -55,6 +71,13 @@ namespace MyWork.ViewModels
         {
             get { return backlogItemVisibility; }
             set { SetProperty(ref backlogItemVisibility, value); }
+        }
+
+        private Visibility backlogItemDetailVisibility = Visibility.Collapsed;
+        public Visibility BacklogItemDetailVisibility
+        {
+            get { return backlogItemDetailVisibility; }
+            set { SetProperty(ref backlogItemDetailVisibility, value); }
         }
 
         private Visibility progressRingVisibility = Visibility.Collapsed;
@@ -142,6 +165,11 @@ namespace MyWork.ViewModels
             BacklogItemVisibility = Visibility.Collapsed;
         }
 
+        public void CloseBacklogDetailDialog()
+        {
+            BacklogItemDetailVisibility = Visibility.Collapsed;
+        }
+
         private void LoadInprogressBacklog(int userId, int sprint)
         {
             var inprogressBacklogs = BacklogManager.GetInstance().GetAllInProgressBacklog(userId, sprint);
@@ -172,6 +200,7 @@ namespace MyWork.ViewModels
                 };
                 model.EditBacklog += EditBacklog;
                 model.QuickClose += QuichCloseBacklog;
+                model.OpenDetail += OpenBacklogDetail;
                 backlogModels.Add(model);
             }
 
@@ -236,6 +265,15 @@ namespace MyWork.ViewModels
                     BacklogManager.GetInstance().SaveBacklog(thisBacklog.Backlog);
                     RefreshPage();
                 }
+            }
+        }
+
+        private void OpenBacklogDetail(object sender, EventArgs e)
+        {
+            BacklogModel thisBacklog = (BacklogModel)sender;
+            if (thisBacklog != null)
+            {
+                BacklogItemDetailVisibility = Visibility.Visible;
             }
         }
 
